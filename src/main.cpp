@@ -20,7 +20,7 @@ Arduino pin GND -> HX711 GND
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <HX711.h>
-#include "utils.h"
+#include <utils.h>
 
 HX711 scale;
 
@@ -138,27 +138,42 @@ void loop()
   float maxMeasurement = calcMax(measurementBuffer, numValidMeasurements);
   float minMeasurement = calcMin(measurementBuffer, numValidMeasurements);
 
-  // Display the data on the screen
-  lcd.setCursor(0, 0);
-  lcd.print(measurement);
+  String measurementString = formatFloat(measurement);
+  String avgMeasurementString = formatFloat(avgMeasurement);
+
+  // Display the average and top labels
   lcd.setCursor(0, 1);
-  lcd.print(avgMeasurement);
+  lcd.print("a");
+  lcd.setCursor(9, 1);
+  lcd.print("t");
+
+  // Display the kg label
+  lcd.setCursor(9, 0);
+  lcd.print("kg");
+
+  // Display the measurements and calculation on the screen
+  lcd.setCursor(2, 0);
+  lcd.print(measurementString.c_str());
+  lcd.setCursor(2, 1);
+  lcd.print(avgMeasurementString);
 
   if (measurement < 0)
   {
     lcd.setCursor(13, 0);
     const char *description = "cmp";
     lcd.print(description);
-    lcd.setCursor(7, 1);
-    lcd.print(minMeasurement);
+    lcd.setCursor(11, 1);
+    String minMeasurementString = formatFloat(minMeasurement);
+    lcd.print(minMeasurementString);
   }
   else
   {
     lcd.setCursor(13, 0);
     const char *description = "tns";
     lcd.print(description);
-    lcd.setCursor(7, 1);
-    lcd.print(maxMeasurement);
+    lcd.setCursor(11, 1);
+    String maxMeasurementString = formatFloat(maxMeasurement);
+    lcd.print(maxMeasurementString);
   }
 
   // Adjust the calibration factor based on the serial input
