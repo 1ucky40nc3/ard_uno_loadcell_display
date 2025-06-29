@@ -19,7 +19,8 @@ Arduino pin GND -> HX711 GND
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "HX711.h"
+#include <HX711.h>
+#include "utils.h"
 
 HX711 scale;
 
@@ -29,7 +30,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27, if new versi
 
 // A buffer for about 5 seconds measurements
 // Note: The Load Cell has a sampling rate of 80 hz
-const long measurementBufferSize = 400;
+const long measurementBufferSize = 200;
 float measurementBuffer[measurementBufferSize];
 // The index of the measurements
 long measurementIndex = 0;
@@ -78,42 +79,6 @@ void setup()
   }
 }
 
-// Function to calculate the average of valid elements in the buffer
-float calcAvg(float values[], long currentNumValidValues)
-{
-  float sum = 0;
-  for (long i = 0; i < currentNumValidValues; i++)
-  { // Corrected loop initialization
-    sum += values[i];
-  }
-  if (currentNumValidValues > 0)
-  {
-    return sum / currentNumValidValues;
-  }
-  else
-  {
-    return 0.0; // Avoid division by zero
-  }
-}
-
-// Function to calculate the maximum of valid elements in the buffer
-float calcMax(float values[], long currentNumValidValues)
-{
-  if (currentNumValidValues == 0)
-  {
-    return 0.0; // Or -FLT_MAX, depending on desired behavior for empty buffer
-  }
-
-  float val = values[0]; // Initialize with the first valid element
-  for (long i = 1; i < currentNumValidValues; i++)
-  { // Corrected loop initialization
-    if (values[i] > val)
-    { // Corrected logic: find greater value
-      val = values[i];
-    }
-  }
-  return val;
-}
 void loop()
 {
 
@@ -169,32 +134,32 @@ void loop()
   }
 
   // Calculate the max and averages
-  // float avgMeasurement = calcAvg(measurementBuffer, numValidMeasurements);
-  // float maxMeasurement = calcMax(measurementBuffer, numValidMeasurements);
-  float avgMeasurement = 0.0;
-  float maxMeasurement = 0.0;
+  float avgMeasurement = calcAvg(measurementBuffer, numValidMeasurements);
+  float maxMeasurement = calcMax(measurementBuffer, numValidMeasurements);
+  float minMeasurement = calcMin(measurementBuffer, numValidMeasurements);
 
   // Display the data on the screen
   lcd.setCursor(0, 0);
   lcd.print(measurement);
-
-  lcd.setCursor(13, 0);
+  lcd.setCursor(0, 1);
+  lcd.print(avgMeasurement);
 
   if (measurement < 0)
   {
+    lcd.setCursor(13, 0);
     const char *description = "cmp";
     lcd.print(description);
+    lcd.setCursor(7, 1);
+    lcd.print(minMeasurement);
   }
   else
   {
+    lcd.setCursor(13, 0);
     const char *description = "tns";
     lcd.print(description);
+    lcd.setCursor(7, 1);
+    lcd.print(maxMeasurement);
   }
-
-  lcd.setCursor(0, 1);
-  lcd.print(avgMeasurement);
-  lcd.setCursor(7, 1);
-  lcd.print(maxMeasurement);
 
   // Adjust the calibration factor based on the serial input
   if (Serial.available())
