@@ -1,5 +1,10 @@
 #include <stdlib.h>
-#include <WString.h>
+
+#ifndef UNIT_TEST    // Or a specific macro defined for your native test env
+#include <WString.h> // For Arduino compilation
+#else
+#include <ArduinoFake.h> // For native compilation
+#endif
 
 float calcAvg(float *values, long currentNumValidValues)
 {
@@ -69,7 +74,13 @@ String formatFloat(float value)
 
     // Buffer size of 7 bytes to hold 5 characters + null terminator + optional negtive sign
     char buffer[7];
-    dtostrf(normalizedValue, 5, 1, buffer);
+    // Allow more width for negative numbers
+    signed char width = 5;
+    if (normalizedValue < 0)
+    {
+        width = 6;
+    }
+    dtostrf(normalizedValue, width, 1, buffer);
     String formattedString = String(buffer);
     return buffer;
 }

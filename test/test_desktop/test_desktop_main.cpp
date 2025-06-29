@@ -1,6 +1,6 @@
 using namespace std;
 #include <unity.h>
-#include <WString.h>
+#include <ArduinoFake.h>
 #include <stdlib.h>
 #include "utils.h"
 
@@ -45,11 +45,11 @@ void test_formatFloat()
 
     float floatValue4 = -10;
     String stringValue4 = formatFloat(floatValue4);
-    TEST_ASSERT_EQUAL_STRING(" -10.9", stringValue4.c_str());
+    TEST_ASSERT_EQUAL_STRING(" -10.0", stringValue4.c_str());
 
-    float floatValue4 = -100.1;
-    String stringValue4 = formatFloat(floatValue4);
-    TEST_ASSERT_EQUAL_STRING("-100.1", stringValue4.c_str());
+    float floatValue5 = -100.1;
+    String stringValue5 = formatFloat(floatValue5);
+    TEST_ASSERT_EQUAL_STRING("-100.1", stringValue5.c_str());
 }
 
 void setUp() {}
