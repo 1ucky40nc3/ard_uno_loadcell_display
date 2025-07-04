@@ -2,7 +2,7 @@
 Connect LCD1602 module to Arduino Uno board as following:
 
 I2C -> LCD1602	Arduino Uno board
-GND ->	GND
+GND ->	c
 VCC ->	5V
 SDA ->	A4 /pin 20 mega2560
 SCL ->	A5 /pin 21 mega2560
@@ -21,6 +21,7 @@ Arduino pin GND -> HX711 GND
 #include <LiquidCrystal_I2C.h>
 #include <HX711.h>
 #include <utils.h>
+#include <config.h>
 
 HX711 scale;
 
@@ -30,6 +31,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // set the LCD address to 0x27, if new versi
 
 // A buffer for about 5 seconds measurements
 // Note: The Load Cell has a sampling rate of 80 hz
+// Tip: Don't set this to high as the processor has very limited RAM
 const long measurementBufferSize = 200;
 float measurementBuffer[measurementBufferSize];
 // The index of the measurements
@@ -40,7 +42,7 @@ bool bufferFull = false;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(SERIAL_BAUD);
 
   lcd.init();      // initialize the lcd
   lcd.backlight(); // open the backlight
