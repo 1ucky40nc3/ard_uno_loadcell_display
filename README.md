@@ -74,12 +74,12 @@ After installation and initialization you may build and upload the code to your 
 # Check if your device can be detected
 pio device list
 # Build the code
-pio run -e arduino_nano_esp32 -t build
+pio run -e uno -t build
 # Upload the build
-pio run -e arduino_nano_esp32 -t upload
+pio run -e uno -t upload
 ```
 
-As an alternative to the command you can also use the PlatformIO buttons in VSCode. You can find the buttons below. Make szre to select the correct (`arduino_nano_esp32`) environment for the upload.
+As an alternative to the command you can also use the PlatformIO buttons in VSCode. You can find the buttons below. Make szre to select the correct (`uno`) environment for the upload.
 
 ### Run Tests
 
@@ -87,7 +87,7 @@ As an alternative to the command you can also use the PlatformIO buttons in VSCo
 # Run test locally on your desktop
 pio test -e desktop
 # Run test on the device
-pio test -e arduino_nano_esp32
+pio test -e uno
 ```
 
 #### Debug Tests
