@@ -12,7 +12,7 @@ Install the PlatformIO IDE extension from the VSCode extension marketplace (see 
 
 In this example a PlatformIO project has already been created. The project configuration can be inspected in the [platformio.ini](./platformio.ini) file.
 
-The `platformio` (or `pio`) command-line interface should be installed along the the extension. For the local development purposes you need to intialize the  command-line interface. Execute the following commands in the command-line:
+The `platformio` (or `pio`) command-line interface should be installed along the the extension. For the local development purposes you need to intialize the command-line interface. Execute the following commands in the command-line:
 
 ```bash
 pio project init
@@ -38,31 +38,31 @@ For the project you need to have a:
 Connect the [GeeekPi 2-Pack I2C 1602 LCD Display Module 16X] to the [Arduino UNO R3] based on the following layout:
 
 | [Arduino UNO R3] | Cable Color | [GeeekPi 2-Pack I2C 1602 LCD Display Module 16X] |
-|--------------------|-------------|-------------------------------------|
-| GND                | Black       | GND                                 |
-| 5V               | Red         | VCC                                 |
-| A4                 | Yellow       | SDA                                 |
-| A5                 | Orrange      | SCL                                 |
+| ---------------- | ----------- | ------------------------------------------------ |
+| GND              | Black       | GND                                              |
+| 5V               | Red         | VCC                                              |
+| A4               | Yellow      | SDA                                              |
+| A5               | Orrange     | SCL                                              |
 
 You may want to check the [Z-0234 1602 Serial LCD Module Display Documentation] or the [Arduino UNO R3] documentation.
 
 Next connect the [Load Cell Amplifier- HX711] to the [Arduino UNO R3] using the following layout:
 
 | [Arduino UNO R3] | Cable Color | [Load Cell Amplifier- HX711] |
-|--------------------|-------------|-------------------------------------|
-| GND                | Black       | GND                                 |
-| 5V               | Red         | VCC                                 |
-| D5                 | Yellow       | DT                                 |
-| D6                 | Orrange      | SCL                                 |
+| ---------------- | ----------- | ---------------------------- |
+| GND              | Black       | GND                          |
+| 5V               | Red         | VCC                          |
+| D5               | Yellow      | DT                           |
+| D6               | Orrange     | SCL                          |
 
 Lastly connect the [Load Cell Amplifier- HX711] to the [Mavin Load Cell - S Type - 200kg] according to this layout:
 
-| [Load Cell Amplifier- HX711] |  [Mavin Load Cell - S Type - 200kg] Cable Color |
-|--------------------|-------------|-------------------------------------|
-| E+                 | Red                                     |
-| E-               | Black                                   |
-| A-                 | White                                 |
-| A+                 | Green                                    |
+| [Load Cell Amplifier- HX711] | [Mavin Load Cell - S Type - 200kg] Cable Color |
+| ---------------------------- | ---------------------------------------------- |
+| E+                           | Red                                            |
+| E-                           | Black                                          |
+| A-                           | White                                          |
+| A+                           | Green                                          |
 
 The transparent cable of the [Mavin Load Cell - S Type - 200kg] is not connected to anything. You may refer to the [Tutorial to Interface HX711 Balance Module With Load Cell] for guidance.
 
@@ -98,7 +98,6 @@ If you are using VSCode (which is recommended), use the following steps to debug
 2. Open the testing module [test_desktop_main.cpp](test/test_desktop/test_desktop_main.cpp) in your editor
 3. Go to the debug tab in VSCode
 4. Launch the code with the `PIO Debug` configuration
-
 
 This will automatically attach a gdb debugger and enable VSCode debugging.
 
